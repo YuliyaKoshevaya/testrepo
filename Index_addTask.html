@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ТРИЗ</title>
+</head>
+<body>
+<form action="add.php" method="post">
+<p>Задача</p>
+<p><p><small>Название задачи</small></p>
+   <input type="text" name="NameTask" value="" size="25" /></p>
+<p><p><small>Предмет</small></p>
+  <select name="Subject" size="8" multiple="multiple">
+<option value="first">Житейские задачи</option>
+<option selected="selected" value="second">Задачи по теории ТРИЗ</option>
+<option value="third">Педагогические задачи</option>
+<option value="fourth">Экономические задачи</option>
+<option value="five">Биологические и экологические задачи</option>
+<option value="six">Задачи разные</option>
+<option value="seven">Задачи с техническим уклоном</option>
+<option value="eight">Задача на обнаружение</option>
+  </select>
+</p>
+<p><p><small>Возростная группа</small></p>
+  <select name="Age" size="4" multiple="multiple">
+<option value="first">до 7 лет</option>
+<option selected="selected" value="second">с 7 лет до 12 лет</option>
+<option value="third">с 12 лет до 15 лет</option>
+<option value="fourth">более 16</option>
+  </select>
+</p>
+<p><p> <small>Условия задачи</small></p>
+  <textarea name="ConditionTask" cols="48" rows="8"> </textarea>
+</p>
+<p>Решение</p>
+<p><p><small>ИКР</small></p>
+  <input type="text" name="PerfectSolution" value="" size="35" />
+</p>
+<p><p><small>Техническое противоречие</small></p>
+  <input type="text" name="TechnicalContrad"  value="" size="35" />
+</p>
+<p><p><small>Физическое противоречие</small></p>
+  <input type="text" name="FizContrad" value="" size="35" />
+</p>
+<p><p><small>Метод</small></p>
+  <input type="text" name="Method" value="" size="35" />
+</p>
+<p><p> <small>Решение</small></p>
+  <textarea name="Solution" cols="48" rows="8"> </textarea>
+</p>
+<p>Информация об авторе</p>
+<p><p><small>Фамилия</small></p>
+  <input type="text" name="FamilyName" value="" size="25" />
+</p>
+<p><p><small>Имя</small></p>
+  <input type="text" name="Name" value="" size="25" />
+</p>
+<p><p><small>Отчество</small></p>
+  <input type="text" name="MiddleName" value="" size="25" />
+</p>
+<p><p><small>Род деятельности</small></p>
+  <input type="text" name="Rank" value="" size="25" />
+</p>
+<p> <p>Комментарий</p>
+  <textarea name="Comment" cols="48" rows="8"> </textarea>
+</p>
+<p><input name="submit" type="submit" id="submit" value="Отправить" />
+</p>
+</form>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+	$NameTask = strip_tags(trim($_POST['NameTask']));
+	$Subject = strip_tags(trim($_POST['Subject']));
+	$Age = strip_tags(trim($_POST['Age']));
+	$ConditionTask = strip_tags(trim($_POST['ConditionTask']));
+	$PerfectSolution = strip_tags(trim($_POST['PerfectSolution']));
+	$TechnicalContrad = strip_tags(trim($_POST['TechnicalContrad']));
+	$FizContrad = strip_tags(trim($_POST['FizContrad']));
+	$Method = strip_tags(trim($_POST['Method']));
+	$Solution = strip_tags(trim($_POST['Solution']));
+	$FamilyName = strip_tags(trim($_POST['FamilyName']));
+    $Name = strip_tags(trim($_POST['Name']));
+    $MiddleName = strip_tags(trim($_POST['MiddleName']));
+    $Rank = strip_tags(trim($_POST['Rank']));
+    $Comment = strip_tags(trim($_POST['Comment']));
+
+    if ($NameTask && $Subject && $Age && $ConditionTask && $PerfectSolution && $TechnicalContrad && $FizContrad && $Method && $Solution 
+    && $FamilyName && $Name && $MiddleName && $Rank && $Comment) {
+        include_once("db.php");
+        mysql_query("INSERT INTO TaskList (NameTask, ConditionTask /*, IDUser, IDSubject, IDAge*/) VALUES ('$NameTask', '$ConditionTask' /*, IDUser,IDSubject, IDAge*/");
+        mysql_query("INSERT INTO Solution (PerfectSolution, TechnicalContrad, FizContrad, Method, Solution /*,  IDTask*/) 
+        VALUES ('$PerfectSolution', '$TechnicalContrad', '$FizContrad', '$Method', '$Solution' /*, IDTask"*/);
+        
+        mysql_close();
+        
+         }
+        }
+?>
+
+
+
+
+
+
+
+}
+</body>
+</html>
